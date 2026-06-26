@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Tool = require('../models/Tool');
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET || 'change_this';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 router.get('/', async (req,res) => {
   const tools = await Tool.find().sort({ name:1 });
