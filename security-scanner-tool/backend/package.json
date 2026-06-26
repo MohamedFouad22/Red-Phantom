@@ -1,0 +1,20 @@
+{
+  "name": "security-scanner-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.21.2",
+    "mongoose": "^7.6.0",
+    "portscanner": "^2.2.0",
+    "whois-json": "^2.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
