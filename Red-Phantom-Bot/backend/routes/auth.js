@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-const ADMIN_INVITE = process.env.ADMIN_INVITE_CODE || 'RedPhantomLeaders222';
-const JWT_SECRET = process.env.JWT_SECRET || 'change_this';
+const ADMIN_INVITE = process.env.ADMIN_INVITE_CODE;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post('/signup', async (req,res) => {
   try {
