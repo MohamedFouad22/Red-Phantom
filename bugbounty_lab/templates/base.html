@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title if title else "Red Phantom | Terminal" }}</title>
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/Red Phantom.png') }}"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      body {
+        background:
+          radial-gradient(
+            circle at 10% 20%,
+            rgba(91, 0, 255, 0.05) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 90% 80%,
+            rgba(255, 0, 77, 0.06) 0%,
+            transparent 40%
+          ),
+          linear-gradient(180deg, #020205 0%, #000000 100%);
+        background-attachment: fixed;
+        color: #ececf6;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      ::-webkit-scrollbar {
+        width: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #020205;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(#ff004d, #7800ff);
+        border-radius: 10px;
+      }
+
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 80px;
+        background: rgba(6, 2, 12, 0.4);
+        backdrop-filter: blur(30px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      }
+
+      .logo {
+        font-size: 26px;
+        font-weight: 900;
+        letter-spacing: 1px;
+        text-decoration: none;
+        color: #fff;
+      }
+
+      .logo span {
+        color: #ff004d;
+        text-shadow: 0 0 25px rgba(255, 0, 90, 0.6);
+      }
+
+      .menu {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .menu a {
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 1.2px;
+        color: #8f8fa8;
+        text-transform: uppercase;
+        position: relative;
+        transition: 0.3s;
+      }
+
+      .menu a:hover {
+        color: #fff;
+      }
+
+      .menu a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 0;
+        height: 2px;
+        background: #ff004d;
+        transition: 0.3s;
+        box-shadow: 0 0 10px #ff004d;
+      }
+
+      .menu a:hover::after {
+        width: 100%;
+      }
+
+      .auth-badge {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 8px 18px;
+        border-radius: 100px;
+        border: 1px solid rgba(255, 0, 77, 0.2);
+        font-size: 11px;
+        font-weight: 700;
+        color: #ff004d;
+        margin-left: 20px;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding-bottom: 100px;
+      }
+
+      .flash-messages {
+        margin-top: 30px;
+        width: 100%;
+      }
+
+      .flash {
+        padding: 15px 25px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        font-weight: 600;
+        animation: slideIn 0.5s ease;
+      }
+
+      .flash.success {
+        background: rgba(0, 255, 77, 0.05);
+        color: #00ff4d;
+      }
+      .flash.danger,
+      .flash.error {
+        background: rgba(255, 0, 77, 0.05);
+        color: #ff004d;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      footer {
+        text-align: center;
+        padding: 40px;
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #4a4a65;
+        background: transparent;
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+      }
+
+      @media (max-width: 1024px) {
+        nav {
+          padding: 20px 40px;
+        }
+        .menu {
+          gap: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="{{ url_for('index') }}" class="logo">Red <span>Phantom</span></a>
+
+      <div class="menu">
+        <a href="{{ url_for('index') }}">Operations</a>
+        <a href="{{ url_for('scoreboard') }}">Rankings</a>
+        <a href="{{ url_for('how_to_play') }}">Documentation</a>
+
+        {% if current_user.is_authenticated %}
+        <span class="auth-badge"
+          >{{ current_user.username }} // {{ current_user.score }} XP</span
+        >
+        <a
+          href="{{ url_for('logout') }}"
+          style="color: #4a4a65; font-size: 10px; text-decoration: none"
+          >[EXIT]</a
+        >
+        {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a
+          href="{{ url_for('register') }}"
+          style="
+            color: #fff;
+            background: #ff004d;
+            padding: 10px 22px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 0, 77, 0.3);
+          "
+          >Register</a
+        >
+        {% endif %}
+      </div>
+    </nav>
+
+    <main class="container">
+      <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %}
+      </div>
+
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer>© 2026 RED PHANTOM — SECURE OPERATIONS TERMINAL</footer>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+body {
+    margin: 0;
+    font-family: Segoe UI, Tahoma, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+a {
+    color: #7dd3fc;
+    text-decoration: none;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: #111827;
+    border-bottom: 1px solid #334155;
+}
+
+.topbar nav {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.stats-grid .big {
+    font-size: 30px;
+    margin: 8px 0 0;
+    font-weight: 700;
+}
+
+.card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.badge {
+    background: #1d4ed8;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.category-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.category-badge {
+    background: #0f766e;
+}
+
+.solved {
+    color: #86efac;
+    font-weight: 700;
+}
+
+.flash {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+}
+
+.flash.ok {
+    background: #14532d;
+}
+
+.flash.error {
+    background: #7f1d1d;
+}
+
+.form-card form {
+    display: grid;
+    gap: 10px;
+}
+
+input,
+button {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #475569;
+    font-size: 14px;
+}
+
+button {
+    cursor: pointer;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+}
+
+.scoreboard {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.scoreboard th,
+.scoreboard td {
+    border-bottom: 1px solid #334155;
+    padding: 8px 10px;
+    text-align: left;
+}

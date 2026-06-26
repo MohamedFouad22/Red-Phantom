@@ -1,0 +1,209 @@
+{% extends "base.html" %} {% block content %}
+<style>
+  .info-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    display: grid;
+    gap: 30px;
+  }
+
+  .glass-panel {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.4s;
+  }
+
+  .glass-panel:hover {
+    border-color: rgba(255, 0, 60, 0.4);
+    box-shadow: 0 0 30px rgba(255, 0, 60, 0.1);
+    transform: translateY(-5px);
+  }
+
+  .glass-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #ff003c;
+    box-shadow: 0 0 15px #ff003c;
+  }
+
+  .panel-title {
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+  }
+
+  .panel-title span {
+    color: #ff003c;
+    font-family: monospace;
+  }
+
+  .instruction-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: step-counter;
+  }
+
+  .instruction-list li {
+    margin-bottom: 25px;
+    padding-left: 60px;
+    position: relative;
+    line-height: 1.8;
+    color: #cbd5e1;
+  }
+
+  .instruction-list li::before {
+    content: counter(step-counter, decimal-leading-zero);
+    counter-increment: step-counter;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #ff003c;
+    font-weight: 900;
+    font-family: monospace;
+    font-size: 1.2rem;
+    border: 1px solid rgba(255, 0, 60, 0.3);
+    padding: 5px 8px;
+    border-radius: 4px;
+    background: rgba(255, 0, 60, 0.05);
+  }
+
+  code {
+    background: rgba(0, 0, 0, 0.5);
+    color: #00ff64;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-family: "Fira Code", monospace;
+    border: 1px solid rgba(0, 255, 100, 0.2);
+    box-shadow: 0 0 10px rgba(0, 255, 100, 0.1);
+  }
+
+  .checklist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+  }
+
+  .check-item {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 15px;
+    border-radius: 4px;
+    border-left: 2px solid #ff003c;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #e2e2e2;
+    font-size: 0.9rem;
+  }
+
+  .check-item::before {
+    content: "✓";
+    color: #00ff64;
+    font-weight: bold;
+  }
+
+  .legal-alert {
+    background: linear-gradient(45deg, rgba(255, 0, 60, 0.15), transparent);
+    border: 1px solid #ff003c;
+    padding: 30px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .alert-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 10px #ff003c);
+  }
+
+  .legal-text h3 {
+    color: #ff003c;
+    margin: 0 0 5px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .legal-text p {
+    margin: 0;
+    color: #fff;
+    font-weight: 500;
+  }
+</style>
+
+<div class="info-container">
+  <section class="glass-panel">
+    <h2 class="panel-title"><span>01_</span> Operational Manual</h2>
+    <ol class="instruction-list">
+      <li>
+        Initialize the central core platform on <code>127.0.0.1:5000</code> and
+        sync the target laboratory on <code>127.0.0.1:5001</code>.
+      </li>
+      <li>
+        Establish your identity by creating an operative account and complete
+        the secure authentication process.
+      </li>
+      <li>
+        Browse the <strong>Challenges Repository</strong> to select an active
+        mission parameters.
+      </li>
+      <li>
+        Execute your penetration tools against the
+        <strong>Local Target Endpoint</strong> assigned to the specific mission.
+      </li>
+      <li>
+        Extract the cryptographic evidence (Flag) in the format
+        <code>flag{...}</code> and submit for verification.
+      </li>
+      <li>
+        Confirmed breaches will award XP points and recalibrate your standing on
+        the <strong>Global Scoreboard</strong>.
+      </li>
+    </ol>
+  </section>
+
+  <section class="glass-panel">
+    <h3 class="panel-title"><span>02_</span> System Validation</h3>
+    <div class="checklist">
+      <div class="check-item">
+        Challenge synchronization & briefing display.
+      </div>
+      <div class="check-item">
+        Real-time threat detection for invalid tokens.
+      </div>
+      <div class="check-item">Automated XP allocation & point processing.</div>
+      <div class="check-item">Submission anti-duplicate & tracking logic.</div>
+      <div class="check-item">Instant rank recalibration & solve logging.</div>
+    </div>
+  </section>
+
+  <section class="legal-alert">
+    <div class="alert-icon">⚠️</div>
+    <div class="legal-text">
+      <h3>Mandatory Legal Protocol</h3>
+      <p>
+        OPERATIONAL RESTRICTION: Deployment of tools is strictly limited to
+        local or explicitly authorized assets. Unauthorized exploitation is a
+        violation of cyber-security laws.
+      </p>
+    </div>
+  </section>
+</div>
+{% endblock %}

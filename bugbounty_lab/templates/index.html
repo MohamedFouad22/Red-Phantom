@@ -1,0 +1,240 @@
+{% extends "base.html" %} {% block content %}
+<style>
+  body {
+    background-color: #070b17;
+    color: #e2e2e2;
+    overflow-x: hidden;
+  }
+
+  .command-center {
+    text-align: center;
+    padding: 90px 20px;
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 0, 60, 0.2) 0%,
+      transparent 70%
+    );
+    position: relative;
+    border-bottom: 1px solid rgba(255, 0, 60, 0.2);
+    margin-bottom: 60px;
+  }
+
+  .command-center h2 {
+    font-size: 4.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 12px;
+    margin: 0;
+    background: linear-gradient(to bottom, #fff 30%, #ff003c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(255, 0, 60, 0.5));
+  }
+
+  .status-bar {
+    font-family: "Courier New", monospace;
+    font-size: 0.9rem;
+    color: #ff003c;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 35px;
+    padding: 20px 40px;
+  }
+
+  .challenge-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    min-height: 460px;
+    overflow: hidden;
+  }
+
+  .challenge-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-12px) scale(1.02);
+    border-color: rgba(255, 0, 60, 0.5);
+    box-shadow:
+      0 25px 50px rgba(0, 0, 0, 0.5),
+      0 0 30px rgba(255, 0, 60, 0.15);
+  }
+
+  .challenge-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      circle at center,
+      rgba(148, 0, 255, 0.1) 0%,
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+  }
+
+  .challenge-card:hover::after {
+    opacity: 1;
+  }
+
+  .challenge-header h3 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 30px;
+    font-weight: 800;
+    line-height: 1.2;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+
+  .challenge-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 40px;
+    padding: 25px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    position: relative;
+    z-index: 1;
+  }
+
+  .meta-box label {
+    display: block;
+    font-size: 0.75rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .meta-box span {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #e2e2e2;
+  }
+
+  .btn-launch {
+    display: inline-block;
+    padding: 16px 50px;
+    background: linear-gradient(45deg, #ff003c, #8a0022);
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-radius: 50px;
+    transition: all 0.4s ease;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    box-shadow: 0 4px 15px rgba(255, 0, 60, 0.3);
+  }
+
+  .btn-launch:hover {
+    transform: scale(1.1);
+    background: linear-gradient(45deg, #ff1a53, #ff003c);
+    box-shadow: 0 0 35px rgba(255, 0, 60, 0.7);
+    letter-spacing: 2.5px;
+  }
+
+  .solved-status {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #00ff64;
+    text-transform: uppercase;
+    background: rgba(0, 255, 100, 0.12);
+    padding: 6px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 255, 100, 0.3);
+    z-index: 1;
+  }
+</style>
+
+<section class="command-center">
+  <span class="status-bar">[ BREACH PROTOCOL INITIALIZED ]</span>
+  <h2>Operations</h2>
+  <p
+    style="
+      color: #aaa;
+      max-width: 650px;
+      margin: 20px auto 0 auto;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    "
+  >
+    Execute localized vulnerability simulations. Select an authorized target
+    vector below to begin the mission.
+  </p>
+</section>
+
+<div class="challenges-grid">
+  {% for challenge in challenges %}
+  <article class="challenge-card">
+    {% if challenge.id in solved_ids %}
+    <div class="solved-status">COMPROMISED</div>
+    {% endif %}
+
+    <div class="challenge-header">
+      <h3>{{ challenge.title }}</h3>
+    </div>
+
+    <div class="challenge-content" style="width: 100%">
+      <div class="challenge-meta">
+        <div class="meta-box">
+          <label>VECTOR</label>
+          <span>{{ challenge.category }}</span>
+        </div>
+        <div class="meta-box">
+          <label>RISK</label>
+          <span
+            style="color: {% if challenge.difficulty == 'Easy' %}#00ff64{% elif challenge.difficulty == 'Medium' %}#ffcc00{% else %}#ff003c{% endif %};"
+          >
+            {{ challenge.difficulty }}
+          </span>
+        </div>
+        <div class="meta-box">
+          <label>BOUNTY</label>
+          <span style="color: #ff003c">{{ challenge.points }} CRD</span>
+        </div>
+        <div class="meta-box">
+          <label>STATUS</label>
+          <span>AUTHORIZED</span>
+        </div>
+      </div>
+    </div>
+
+    <a
+      href="{{ url_for('challenge_details', slug=challenge.slug) }}"
+      class="btn-launch"
+    >
+      EXECUTE
+    </a>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}
