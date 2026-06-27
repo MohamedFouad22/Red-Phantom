@@ -24,9 +24,9 @@ An active, automated black-box scanner that maps public-facing threat landscapes
 * **Dynamic Risk Quantification:** Assigns structural risk classification levels (**Critical, High, Medium, Low**) based on standard scoring paradigms.
 * **Actionable Remediation Engine:** Provides complete architectural solutions, cryptographic fixes, code patches, and strict infrastructure hardening steps for each identified vulnerability.
 
-### 3. 🎣 Phishing Simulation & Awareness Framework
+### 3. 🎣 Phishing & Awareness Framework
 An educational simulator targeting social engineering vectors to train and measure employee/user defensive awareness:
-* **Social Blueprints:** Deploys highly realistic, non-destructive simulation interfaces imitating entry environments for popular social channels (**Facebook** and **Instagram**) to record training metrics.
+* **Social Blueprints:** Deploys highly realistic, non-destructive interfaces imitating entry environments for popular social channels (**Facebook** and **Instagram**) to record training metrics.
 * **Quishing (QR Code Phishing):** Generates and maps physical-to-digital attack routing models, teaching users to detect and avoid weaponized QR matrix structures.
 
 ### 4. 🚩 CTF (Capture The Flag) Helper & Scanner
@@ -40,7 +40,7 @@ A specialized collection of essential scripts and modules for administrative and
 | Tool Component | Core Functionality | Ethical Testing Scope |
 | :--- | :--- | :--- |
 | **🔐 Cryptography Suite** | Complete asymmetric/symmetric execution logic (Encryption & Decryption). | Data integrity testing, sensitive credential management verification, and hash checking. |
-| **🦠 Payload Simulator** | Controlled, localized **Trojan** and **Keylogger** behavior simulation blocks. | Examining endpoint protection response systems, tracing process injections, and validating EDR solutions. |
+| **🦠 Payload Simulator** | Controlled, localized **Trojan** and **Keylogger** behavior blocks. | Examining endpoint protection response systems, tracing process injections, and validating EDR solutions. |
 | **🌐 OSINT Website Tracker** | Deep structural target reconnaissance engine. | Maps subdomains, discovers hidden api endpoints, validates SSL/TLS certificate suites, and fetches geolocation/routing metadata. |
 
 ---
@@ -55,7 +55,7 @@ Red Phantom Ops X
  ├── 🚩 CTF Helper Module
  └── 🛠️ Security Toolkit
       ├── Cryptography Suite
-      ├── Payload Simulations (Trojan/Keylogger Mechanics)
+      ├── Payload (Trojan/Keylogger Mechanics)
       └── OSINT Website Tracker (SSL, Endpoints, Domains)
 
 💻 Tech Stack & Underlying Infrastructure
