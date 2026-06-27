@@ -58,8 +58,6 @@ Red Phantom Ops X
       ├── Payload Simulations (Trojan/Keylogger Mechanics)
       └── OSINT Website Tracker (SSL, Endpoints, Domains)
 
----
-
 💻 Tech Stack & Underlying Infrastructure
 Backend Environment: Node.js / TypeScript
 
